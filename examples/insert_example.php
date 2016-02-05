@@ -4,7 +4,7 @@
 require 'BasicDB.php';
 
 // connection
-$db = new BasicDB('localhost', 'testdb', 'testuser', 'password');
+$db = new \Erbilen\Database\BasicDB('localhost', 'testdb', 'testuser', 'password');
 
 // insert
 $query = $db->insert('users')
@@ -13,7 +13,7 @@ $query = $db->insert('users')
                  password => 123456,
                  email => 'test@mail.com'
             ));
-   
+
 if ( $query ){
   echo 'Last Insert Id: '.$db->lastId();
 }

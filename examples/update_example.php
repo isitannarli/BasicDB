@@ -4,7 +4,7 @@
 require 'BasicDB.php';
 
 // connection
-$db = new BasicDB('localhost', 'testdb', 'testuser', 'password');
+$db = new \Erbilen\Database\BasicDB('localhost', 'testdb', 'testuser', 'password');
 
 // update
 $query = $db->update('users')
@@ -12,7 +12,7 @@ $query = $db->update('users')
             ->set(array(
                  username => 'another user'
             ));
-   
+
 if ( $query ){
   echo 'update success';
 }

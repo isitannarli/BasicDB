@@ -4,7 +4,7 @@
 require 'BasicDB.php';
 
 // connection
-$db = new BasicDB('localhost', 'testdb', 'testuser', 'password');
+$db = new \Erbilen\Database\BasicDB('localhost', 'testdb', 'testuser', 'password');
 
 // select
 $query = $db->select('post')
@@ -15,7 +15,7 @@ $query = $db->select('post')
             ->groupby('post_user')
             ->limit(0, 10)
             ->run();
-   
+
 if ( $query ){
   foreach ( $query as $row ){
     print_r($row);

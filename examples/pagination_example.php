@@ -4,7 +4,7 @@
 require 'BasicDB.php';
 
 // connection
-$db = new BasicDB('localhost', 'testdb', 'testuser', 'password');
+$db = new \Erbilen\Database\BasicDB('localhost', 'testdb', 'testuser', 'password');
 
 // pagination example
 $totalRecord = $db->select('users')
