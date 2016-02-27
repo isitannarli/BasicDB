@@ -3,7 +3,7 @@
 namespace Erbilen\Database;
 /**
  * Class BasicDB
- * 
+ *
  * @author Tayfun Erbilen
  *         @web http://www.erbilen.net
  *         @mail tayfunerbilen@gmail.com
@@ -123,11 +123,12 @@ class BasicDB extends \PDO
      *            $username
      * @param
      *            $password
-     * @param string $charset            
+     * @param string $charset
      */
     public function __construct($host, $dbname, $username, $password, $charset = 'utf8')
     {
         parent::__construct('mysql:host=' . $host . ';dbname=' . $dbname, $username, $password);
+        parent::setAttribute(parent::ATTR_ERRMODE, parent::ERRMODE_EXCEPTION);
         $this->query('SET CHARACTER SET ' . $charset);
         $this->query('SET NAMES ' . $charset);
     }
@@ -166,8 +167,8 @@ class BasicDB extends \PDO
      *            $column
      * @param
      *            $value
-     * @param string $mark            
-     * @param bool $filter            
+     * @param string $mark
+     * @param bool $filter
      * @return $this
      */
     public function where($column, $value = '', $mark = '=', $logical = '&&')
@@ -205,7 +206,7 @@ class BasicDB extends \PDO
      *            $targetTable
      * @param
      *            $joinSql
-     * @param string $joinType            
+     * @param string $joinType
      * @return $this
      */
     public function join($targetTable, $joinSql, $joinType = 'inner')
@@ -219,7 +220,7 @@ class BasicDB extends \PDO
      *
      * @param
      *            $columnName
-     * @param string $sort            
+     * @param string $sort
      */
     public function orderby($columnName, $sort = 'ASC')
     {
@@ -258,7 +259,7 @@ class BasicDB extends \PDO
     /**
      * Used for running Insert/Update/Select operations.
      *
-     * @param bool $single            
+     * @param bool $single
      * @return array|mixed
      */
     public function run($single = false)
@@ -280,17 +281,17 @@ class BasicDB extends \PDO
             $this->sql .= $this->limit;
             $this->limit = null;
         }
-        
-        
+
+
         $query = $this->query($this->sql);
-        
+
         if ($single){
             return $query->fetch(parent::FETCH_ASSOC);
         }
         else{
             return $query->fetchAll(parent::FETCH_ASSOC);
         }
-            
+
     }
 
     /**
@@ -455,14 +456,20 @@ class BasicDB extends \PDO
      *            $url
      * @return mixed
      */
-    public function showPagination($url, $class = 'active')
+    public function showPagination($url, $class = 'active', $element = 'li')
     {
         if ($this->totalRecord > $this->paginationLimit) {
-            for ($i = $this->page - 5; $i < $this->page + 5 + 1; $i ++) {
+            for ($i = $this->page - 5; $i < $this->page + 5 + 1; $i++) {
                 if ($i > 0 && $i <= $this->pageCount) {
-                    $this->html .= '<li class="';
-                    $this->html .= ($i == $this->page ? $class : null);
-                    $this->html .= '"><a href="' . str_replace('[page]', $i, $url) . '">' . $i . '</a>';
+                    if ($element == 'li') {
+                        $this->html .= '<li';
+                        $this->html .= ($i == $this->page ? ' class="' . $class . '"' : null);
+                        $this->html .= '><a href="' . str_replace('[page]', $i, $url) . '">' . $i . '</a>';
+                    } else {
+                        $this->html .= '<a class="';
+                        $this->html .= ($i == $this->page ? $class : null);
+                        $this->html .= '" href="' . str_replace('[page]', $i, $url) . '">' . $i . '</a>';
+                    }
                 }
             }
             return $this->html;
