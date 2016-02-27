@@ -10,11 +10,10 @@ $db = new \Erbilen\Database\BasicDB('localhost', 'testdb', 'testuser', 'password
 $query = $db->update('users')
             ->where('user_id', 2)
             ->set(array(
-                 username => 'another user'
+                username => 'another user'
             ));
 
-if ( $query ){
-  echo 'update success';
+if($query)
+{
+    echo 'update success';
 }
-
-?>

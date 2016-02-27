@@ -16,10 +16,10 @@ $query = $db->select('post')
             ->limit(0, 10)
             ->run();
 
-if ( $query ){
-  foreach ( $query as $row ){
-    print_r($row);
-  }
+if($query)
+{
+    foreach($query as $row)
+    {
+        print_r($row);
+    }
 }
-
-?>

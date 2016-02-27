@@ -23,5 +23,3 @@ $query = $db->select('users')
 print_r($query);
 
 echo $db->showPagination('http://localhost/test/?'.$pageParam.'=[page]');
-
-?>
